@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @Autonomous(name="Cruise", group ="Red")
-@Disabled
+
 public class MecanumCruise extends LinearOpMode {
 
     OpenGLMatrix lastLocation = null;
