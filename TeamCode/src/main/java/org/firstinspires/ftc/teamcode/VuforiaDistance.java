@@ -21,11 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Autonomous(name="Vuforia Distance Tracker", group ="summerProjects")
-public class NavVuforia extends LinearOpMode {
+public class VuforiaDistance extends LinearOpMode {
 
     public static final String TAG = "Vuforia Navigation Sample";
-
-    OpenGLMatrix lastLocation = null;
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
@@ -47,7 +45,6 @@ public class NavVuforia extends LinearOpMode {
 
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.add(flag_finder.get(0));
-        //trendy.setLocation(new OpenGLMatrix());
 
         telemetry.addData(">", "Press Play to see if this bad boy works...");
         telemetry.update();
@@ -59,34 +56,22 @@ public class NavVuforia extends LinearOpMode {
         while (opModeIsActive()) {
 
             for (VuforiaTrackable trackable : allTrackables) {
-                /**
-                 * getUpdatedRobotLocation() will return null if no new information is available since
-                 * the last time that call was made, or if the trackable is not currently visible.
-                 * getRobotLocation() will return null if the trackable is not currently visible.
-                 */
                 telemetry.addData(trackable.getName(), ((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible() ? "Visible" : "Not Visible");    //
+
                 OpenGLMatrix testLocation = ((VuforiaTrackableDefaultListener) trackable.getListener()).getPose();
-                String outputString = "NULL";
+
+                String pose = "NULL";
                 if(testLocation != null) {
-                    outputString = format(testLocation);
+                    pose = format(testLocation);
                 }
+                telemetry.addData("DISTANCE", pose);
 
-                telemetry.addData("POSE", outputString);
-                OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
-
-                if (robotLocationTransform != null) {
-                    lastLocation = robotLocationTransform;
+                String distance = "NULL";
+                if(testLocation != null) {
+                    distance = "" + getDistance(testLocation);
                 }
+                telemetry.addData("DISTANCE", distance);
             }
-            /**
-             * Provide feedback as to where the robot was last located (if we know).
-             */
-            /*if (lastLocation != null) {
-                //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
-                telemetry.addData("Pos", format(lastLocation));
-            } else {
-                telemetry.addData("Pos", "Unknown");
-            }*/
             telemetry.update();
         }
     }
@@ -98,5 +83,14 @@ public class NavVuforia extends LinearOpMode {
     String format(OpenGLMatrix transformationMatrix) {
         return transformationMatrix.formatAsTransform();
     }
+
+    /**
+     * A utility that takes an OPENGLMatrix transform and determines the distance to the origin (0,0,0).
+     */
+    float getDistance(OpenGLMatrix transformatoinMatrix) {
+        float x = transformatoinMatrix.getTranslation().get(0);
+        float y = transformatoinMatrix.getTranslation().get(1);
+        float z = transformatoinMatrix.getTranslation().get(2);
+        return (float)Math.sqrt(Math.pow(Math.sqrt(Math.pow(x,2)+Math.pow(y,2)),2)); //use pythagorean formula twice to find distance
+    }
 }
-//this is a change
