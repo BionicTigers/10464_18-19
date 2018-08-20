@@ -47,7 +47,7 @@ public class NavVuforia extends LinearOpMode {
 
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.add(flag_finder.get(0));
-        trendy.setLocation(new OpenGLMatrix());
+        //trendy.setLocation(new OpenGLMatrix());
 
         telemetry.addData(">", "Press Play to see if this bad boy works...");
         telemetry.update();
@@ -68,10 +68,10 @@ public class NavVuforia extends LinearOpMode {
                 OpenGLMatrix testLocation = ((VuforiaTrackableDefaultListener) trackable.getListener()).getPose();
                 String outputString = "NULL";
                 if(testLocation != null) {
-                    outputString = format(trackable.getLocation());
+                    outputString = format(testLocation);
                 }
 
-                telemetry.addData("P-" + trackable.getName(), outputString);
+                telemetry.addData("POSE", outputString);
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
 
                 if (robotLocationTransform != null) {
@@ -81,12 +81,12 @@ public class NavVuforia extends LinearOpMode {
             /**
              * Provide feedback as to where the robot was last located (if we know).
              */
-            if (lastLocation != null) {
+            /*if (lastLocation != null) {
                 //  RobotLog.vv(TAG, "robot=%s", format(lastLocation));
                 telemetry.addData("Pos", format(lastLocation));
             } else {
                 telemetry.addData("Pos", "Unknown");
-            }
+            }*/
             telemetry.update();
         }
     }
@@ -99,3 +99,4 @@ public class NavVuforia extends LinearOpMode {
         return transformationMatrix.formatAsTransform();
     }
 }
+//this is a change
