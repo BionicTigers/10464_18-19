@@ -64,13 +64,19 @@ public class VuforiaDistance extends LinearOpMode {
                 if(testLocation != null) {
                     pose = format(testLocation);
                 }
-                telemetry.addData("DISTANCE", pose);
 
                 String distance = "NULL";
                 if(testLocation != null) {
                     distance = "" + getDistance(testLocation);
                 }
                 telemetry.addData("DISTANCE", distance);
+
+                String launchVelocity = "NULL";
+                if(testLocation != null) {
+                    launchVelocity = "" + launchVelocity(getDistance(testLocation),30);
+                }
+                telemetry.addData("VELOCITY", launchVelocity);
+
             }
             telemetry.update();
         }
@@ -91,6 +97,17 @@ public class VuforiaDistance extends LinearOpMode {
         float x = transformatoinMatrix.getTranslation().get(0);
         float y = transformatoinMatrix.getTranslation().get(1);
         float z = transformatoinMatrix.getTranslation().get(2);
-        return (float)Math.sqrt(Math.pow(Math.sqrt(Math.pow(x,2)+Math.pow(y,2)),2)); //use pythagorean formula twice to find distance
+        return (float)Math.sqrt(Math.pow(Math.sqrt(Math.pow(x,2)+Math.pow(y,2)),2)+Math.pow(z,2)); //use pythagorean formula twice to find distance
     }
+
+    /**
+     *
+     * @param distance - distance to the target, in meters
+     * @param angle - angle the object is launched at, in degrees
+     * @return velocity of launch, in meters per second (assuming object is level with camera)
+     */
+    float launchVelocity(float distance, float angle) {
+        return (float)Math.sqrt((9.8*distance)/Math.sin(Math.toRadians(angle)));
+    }
+
 }
