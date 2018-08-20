@@ -104,7 +104,7 @@ public class VuforiaDistance extends LinearOpMode {
 
     /**
      *
-     * @param distance - distance to the target, in meters
+     * @param distance - distance to the vuforia target, in meters
      * @param angle - angle the object is launched at, in degrees
      * @return velocity of launch, in meters per second (assuming object is level with camera)
      */
