@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -99,7 +100,7 @@ public class CruiseControlTest extends OpMode {
             }
         };
 
-        while (motorFrontLeft.isBusy()) { // && motorBackRight.isBusy() && motorBackLeft.isBusy() && motorFrontRight.isBusy()
+        while (!motorFrontLeft.isBusy()) { // && motorBackRight.isBusy() && motorBackLeft.isBusy() && motorFrontRight.isBusy()
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             executor.scheduleAtFixedRate(cruiseCheck, 1, 1, TimeUnit.SECONDS);
         }
