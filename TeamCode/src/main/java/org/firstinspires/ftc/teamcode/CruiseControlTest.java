@@ -52,6 +52,7 @@ public class CruiseControlTest extends OpMode {
     public void loop() {
         if(gamepad1.a) {
             setCruiseControl(50, (int)(-gamepad1.left_stick_y * 100));
+
         }
     }
 
