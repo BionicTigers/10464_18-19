@@ -61,21 +61,23 @@ public class VuforiaDistance extends LinearOpMode {
                 OpenGLMatrix testLocation = ((VuforiaTrackableDefaultListener) trackable.getListener()).getPose();
 
                 String pose = "NULL";
+                String distance = "NULL";
+                String launchVelocity = "NULL";
+                String cameraCenter = "NULL";
+                String cameraRotationAlias = "NULL";
                 if(testLocation != null) {
                     pose = format(testLocation);
-                }
-
-                String distance = "NULL";
-                if(testLocation != null) {
                     distance = "" + getDistance(testLocation);
-                }
-                telemetry.addData("DISTANCE", distance);
-
-                String launchVelocity = "NULL";
-                if(testLocation != null) {
                     launchVelocity = "" + launchVelocity(getDistance(testLocation),30);
+                    cameraCenter = "" + cameraRotation(testLocation);
+                    cameraRotationAlias = "" + (cameraRotation(testLocation) < 0 ? "TURNING RIGHT" : "TURINING LEFT");
                 }
+                telemetry.addData("POSE", pose);
+                telemetry.addData("DISTANCE", distance);
                 telemetry.addData("VELOCITY", launchVelocity);
+                telemetry.addData("CAMERA_MOTOR_POWER", cameraCenter);
+                telemetry.addData("CAMERA_SERVO_ALIAS", cameraRotationAlias);
+
 
             }
             telemetry.update();
@@ -102,12 +104,17 @@ public class VuforiaDistance extends LinearOpMode {
 
     /**
      *
-     * @param distance - distance to the target, in meters
+     * @param distance - distance to the vuforia target, in meters
      * @param angle - angle the object is launched at, in degrees
      * @return velocity of launch, in meters per second (assuming object is level with camera)
      */
     float launchVelocity(float distance, float angle) {
         return (float)Math.sqrt((9.8*distance)/Math.sin(Math.toRadians(angle)));
+    }
+
+    float cameraRotation(OpenGLMatrix transformationMatrix) {
+        float y = transformationMatrix.getTranslation().get(1);
+        return 0.1f * y;
     }
 
 }
