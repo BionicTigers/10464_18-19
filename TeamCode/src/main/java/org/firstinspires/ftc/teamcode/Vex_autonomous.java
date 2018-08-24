@@ -16,20 +16,17 @@ public class Vex_autonomous extends LinearOpMode {
     public DcMotor transport;
     public DcMotor collector;
 
-   public void runOpMode(){
-
-       motorFrontRight = hardwareMap.dcMotor.get("frontRight");
-       motorFrontLeft = hardwareMap.dcMotor.get("frontLeft");
-       motorBackRight = hardwareMap.dcMotor.get("backRight");
-       motorBackLeft = hardwareMap.dcMotor.get("backLeft");
-       launcher = hardwareMap.dcMotor.get("launcher");
-       transport = hardwareMap.dcMotor.get("transport"); //
-       collector = hardwareMap.dcMotor.get("collector");
+    public void runOpMode() {
 
 
+        motorFrontRight = hardwareMap.dcMotor.get("frontRight");
+        motorFrontLeft = hardwareMap.dcMotor.get("frontLeft");
+        motorBackRight = hardwareMap.dcMotor.get("backRight");
+        motorBackLeft = hardwareMap.dcMotor.get("backLeft");
+        launcher = hardwareMap.dcMotor.get("launcher");
+        transport = hardwareMap.dcMotor.get("transport"); //
+        collector = hardwareMap.dcMotor.get("collector");
 
 
-
-   }
-
+    }
 }
