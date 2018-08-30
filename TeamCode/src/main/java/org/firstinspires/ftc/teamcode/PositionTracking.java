@@ -19,14 +19,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
 import org.firstinspires.ftc.robotcore.external.navigation.Temperature;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-
-import hallib.HalDashboard;
-
+//This is a modification of the random thing tried to replace their proprietary methods with actual stuff but idk how well that worked
 @TeleOp(name="Test: REV Expansion Hub", group="3543TestSamples")
 //@Disabled
 public class PositionTracking extends OpMode
 {
-    private Telemetry dashboard;
     private BNO055IMU imu;
     private float hsvValues[] = {0.0f, 0.0f, 0.0f};
 
@@ -193,29 +190,26 @@ public class PositionTracking extends OpMode
 
             }
         };
-        imu.startAccelerationIntegration();
+
 
     }   //initRobot
 
 
     public void loop()
     {
-        dashboard.displayPrintf(1, "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
+        telemetry.addData("orientation:", "Angle:x=%6.1f,y=%6.1f,z=%6.1f",
                 imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).firstAngle,
                 imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).secondAngle,
                 imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle);
-        dashboard.displayPrintf(4, "Accel: x=%6.1f,y=%6.1f,z=%6.1f",
+        telemetry.addData("Velocity", "Vel: x=%6.1f,y=%6.1f,z=%6.1f",
+                imu.getVelocity().xVeloc,
+                imu.getVelocity().yVeloc,
+                imu.getVelocity().zVeloc);
+        telemetry.addData("LinearAccel", "Dist: x=%6.1f,y=%6.1f,z=%6.1f",
                 imu.getLinearAcceleration().xAccel,
                 imu.getLinearAcceleration().yAccel,
-                imu.getLinearAcceleration().zAccel;
-        dashboard.displayPrintf(5, "Vel: x=%6.1f,y=%6.1f,z=%6.1f",
-                imu.accel.getXVelocity().xAccel,
-                imu.accel.getYVelocity().xAccel,
-                imu.accel.getZVelocity().xAccel);
-        dashboard.displayPrintf(6, "Dist: x=%6.1f,y=%6.1f,z=%6.1f",
-                imu.accel.getXDistance().xAccel,
-                imu.accel.getYDistance().xAccel,
-                imu.accel.getZDistance().xAccel);
+                imu.getLinearAcceleration().zAccel);
+        telemetry.update();
 
 
     }   //runPeriodic
