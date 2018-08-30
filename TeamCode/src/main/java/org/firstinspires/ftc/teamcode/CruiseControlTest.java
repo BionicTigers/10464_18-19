@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 @TeleOp(name="CruiseTest", group ="summerProjects")
 
-public class CruiseControlTest extends OpMode {
+public abstract class CruiseControlTest extends OpMode {
 
     public DcMotor motorFrontLeft;
 //    public DcMotor motorBackRight;
@@ -49,12 +49,12 @@ public class CruiseControlTest extends OpMode {
 //        motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    public void loop() {
-        if(gamepad1.a) {
-            setCruiseControl(50, (int)(-gamepad1.left_stick_y * 100));
-            i =  (int)runtime.seconds()+1;
-        }
-    }
+//    public void loop() {
+//        if(gamepad1.a) {
+//            setCruiseControl(50, (int)(-gamepad1.left_stick_y * 100));
+//            i =  (int)runtime.seconds()+1;
+//        }
+//    }
 
     public void setCruiseControl(int speed, int distance) { //Distance should be in full wheel rotations
         distance = distance * 1120; //1120 encoder ticks per revolution of Classic NeveRest 40s
