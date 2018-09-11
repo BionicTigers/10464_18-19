@@ -7,32 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.*;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.*;
-
-
-import org.firstinspires.ftc.robotcore.external.navigation.MagneticFlux;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Quaternion;
-import org.firstinspires.ftc.robotcore.external.navigation.Temperature;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 //This is a modification of the random thing tried to replace their proprietary methods with actual stuff but idk how well that worked
 @Autonomous(name="Test: REV Expansion Hub", group="hi")
 
 public class PositionTracking extends LinearOpMode
 {
-
-
-
-
-
     // State used for updating telemetry
     Orientation angles;
     Acceleration gravity;
@@ -46,7 +29,7 @@ public class PositionTracking extends LinearOpMode
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
-        parameters.accelerationIntegrationAlgorithm = imu.startAccelerationIntegration(Position, Velocity, int);
+        parameters.accelerationIntegrationAlgorithm = imu.startAccelerationIntegration(new Position(DistanceUnit.METER,0,0,0,0),new Velocity(DistanceUnit.METER, 0, 0, 0,0), 100);
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
@@ -70,10 +53,7 @@ public class PositionTracking extends LinearOpMode
                     imu.getLinearAcceleration().zAccel);
             telemetry.update();
         }
-
-
     }
-
 }
 
 
